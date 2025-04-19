@@ -1,0 +1,343 @@
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { 
+  ChefHat, 
+  Clock, 
+  Users, 
+  GraduationCap, 
+  Phone, 
+  Instagram, 
+  MessageCircle,
+  MessageSquare as WhatsApp 
+} from 'lucide-react';
+import Header from './components/Header';
+import { ContactForm } from './components/ContactForm';
+import { COLORS } from './constants/colors';
+
+// Variantes de animação
+const fadeInUp = {
+  hidden: { 
+    opacity: 0, 
+    y: 30,
+    scale: 0.95
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.2, 0.65, 0.3, 0.9]
+    }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1
+    }
+  }
+};
+
+// Componente de esqueleto para a galeria
+const GallerySkeleton = () => (
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {[...Array(6)].map((_, index) => (
+      <div key={index} className="h-64 bg-gray-200 rounded-lg animate-pulse" />
+    ))}
+  </div>
+);
+
+function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className={`min-h-screen bg-[${COLORS.quinoa}]/10`}>
+      <Header />
+      
+      <main className="pt-0">
+        {/* Hero Section */}
+        <motion.section 
+          className="relative h-screen flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <motion.img
+            src="/imagens/ceviche.jpg"
+            alt="Ceviche Peruano"
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ scale: 1.2 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.5 }}
+          />
+          <div className="absolute inset-0 bg-black/50" />
+          <motion.div 
+            className="relative text-center text-white z-10 max-w-3xl mx-auto px-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 1 }}
+          >
+            <h1 className={`text-4xl md:text-5xl font-bold mb-6 text-[${COLORS.quinoa}]`}>Autêntico Ceviche Peruano</h1>
+            <p className="text-xl md:text-2xl leading-relaxed">
+              Especialista em ceviches, causas e chaufas - A verdadeira experiência gastronômica dos Andes
+            </p>
+          </motion.div>
+        </motion.section>
+
+        {/* About Section */}
+        <motion.section 
+          id="about" 
+          className="py-20 px-8 bg-white" 
+          aria-labelledby="about-title"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+        >
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <motion.img 
+              src="/imagens/principal2.jpg"
+              alt="Chef Luis Tello preparando um prato"
+              className="rounded-lg shadow-xl"
+              loading="lazy"
+              variants={fadeInUp}
+              whileHover={{
+                scale: 1.05,
+                transition: {
+                  duration: 0.3,
+                  ease: "easeOut"
+                }
+              }}
+            />
+            <motion.div variants={fadeInUp}>
+              <h2 id="about-title" className="text-4xl font-bold text-[#662F3C] mb-6">Sobre o Chef</h2>
+              <p className="text-gray-700 mb-6 leading-relaxed">
+                Com mais de 15 anos de experiência na culinária peruana, sou especialista em pratos tradicionais como o ceviche, 
+                causa recheada e chaufa. Cada prato é preparado com ingredientes frescos e técnicas autênticas, 
+                trazendo o verdadeiro sabor do Peru para sua mesa.
+              </p>
+              <div className="space-y-4 text-gray-700">
+                <div className={`flex items-center gap-4 text-[${COLORS.andino}]`}>
+                  <ChefHat size={24} aria-hidden="true" />
+                  <span>Mestre em Ceviches e Causas</span>
+                </div>
+                <p className="italic text-sm">
+                  "O segredo do ceviche perfeito está na frescura do peixe e no tempo preciso de preparação."
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* Services Section */}
+        <section id="services" className="py-20 px-8 bg-[#DDD2C1]">
+          <div className="max-w-6xl mx-auto">
+            <h2 className={`text-4xl font-bold text-center text-[${COLORS.aaji}] mb-16`}>Nossos Serviços</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: Users,
+                  title: "Jantares Privados",
+                  description: "Experiência completa com ceviche fresco, causas tradicionais e autêntico chaufa peruano"
+                },
+                {
+                  icon: Clock,
+                  title: "Eventos Pequenos",
+                  description: "Buffet peruano completo com estação ao vivo de ceviche e pratos quentes"
+                },
+                {
+                  icon: GraduationCap,
+                  title: "Aulas de Culinária",
+                  description: "Aprenda os segredos do ceviche perfeito e outras especialidades andinas"
+                }
+              ].map((service, index) => (
+                <motion.div 
+                  key={index} 
+                  className="bg-white/90 p-8 rounded-lg shadow-lg text-center hover:bg-white transition-colors"
+                  variants={fadeInUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                >
+                  <service.icon size={48} className={`mx-auto mb-4 text-[${COLORS.andino}]`} aria-hidden="true" />
+                  <h3 className={`text-xl font-semibold mb-4 text-[${COLORS.aaji}]`}>{service.title}</h3>
+                  <p className="text-gray-600">{service.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Gallery Section */}
+        <motion.section 
+          id="gallery" 
+          className="py-20 px-8 bg-white" 
+          aria-labelledby="gallery-title"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+        >
+          <div className="max-w-6xl mx-auto">
+            <motion.h2 
+              id="gallery-title" 
+              className={`text-4xl font-bold text-center text-[${COLORS.aaji}] mb-16`}
+              variants={fadeInUp}
+            >
+              Galeria
+            </motion.h2>
+            
+            <motion.div variants={fadeInUp}>
+              {isLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {[...Array(6)].map((_, index) => (
+                    <div key={index} className="h-64 bg-gray-200 rounded-lg animate-pulse" />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {[
+                    "/imagens/foto1.jpg",
+                    "/imagens/foto2.jpg",
+                    "/imagens/foto3.jpg",
+                    "/imagens/foto4.jpg",
+                    "/imagens/foto5.jpg",
+                    "/imagens/foto6.jpg"
+                  ].map((image, index) => (
+                    <motion.div
+                      key={index}
+                      className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                      variants={fadeInUp}
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      <motion.img 
+                        src={image}
+                        alt={`Prato ${index + 1} do Chef Luis Tello`}
+                        className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                        loading="lazy"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 hidden md:flex items-center justify-center">
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          whileHover={{ opacity: 1, y: 0 }}
+                          className="text-white text-center p-4"
+                        >
+                          <p className="text-lg font-semibold">Ver Detalhes</p>
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* Testimonials Section */}
+        <section className="py-20 px-8 bg-[#DDD2C1]">
+          <div className="max-w-6xl mx-auto">
+            <h2 className={`text-4xl font-bold text-center text-[${COLORS.aaji}] mb-16`}>Depoimentos</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {[
+                {
+                  text: "O melhor ceviche que já provei! O Chef Luis Tello traz o verdadeiro sabor do Peru para nossa casa.",
+                  author: "Maria Silva"
+                },
+                {
+                  text: "As aulas de culinária foram fantásticas. Aprendi todos os segredos para fazer uma causa perfeita!",
+                  author: "João Santos"
+                }
+              ].map((testimonial, index) => (
+                <motion.div 
+                  key={index} 
+                  className="bg-white p-8 rounded-lg shadow-lg"
+                  variants={fadeInUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                >
+                  <p className="text-gray-600 mb-4 italic">"{testimonial.text}"</p>
+                  <p className={`text-[${COLORS.aaji}] font-semibold`}>{testimonial.author}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="py-20 px-8 bg-white">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center">
+              <h2 className={`text-4xl font-bold text-[${COLORS.aaji}] mb-8`}>Contato</h2>
+              <p className="text-xl text-gray-700 mb-8">
+                Veja a disponibilidade de agenda no WhatsApp ou Instagram
+              </p>
+              <div className="flex justify-center gap-6">
+                <a 
+                  href="https://wa.me/5511999999999" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
+                  aria-label="Contato via WhatsApp"
+                >
+                  <WhatsApp size={24} aria-hidden="true" />
+                  <span>WhatsApp</span>
+                </a>
+                <a 
+                  href="https://instagram.com/chefluistello" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 bg-[#8B0000] text-white px-6 py-3 rounded-lg hover:bg-[#6B0000] transition"
+                  aria-label="Contato via Instagram"
+                >
+                  <Instagram size={24} aria-hidden="true" />
+                  <span>Instagram</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className={`bg-[${COLORS.aaji}] text-[${COLORS.quinoa}] py-8 px-8`}>
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+          <div className="flex items-center gap-2 mb-4 md:mb-0">
+            <ChefHat size={24} aria-hidden="true" />
+            <span className="text-xl font-semibold">Chef Luis Tello</span>
+          </div>
+          <p>&copy; 2024 Chef Luis Tello. Todos os direitos reservados.</p>
+        </div>
+      </footer>
+
+      {/* WhatsApp Button */}
+      <a
+        href="https://wa.me/5511999999999"
+        className="fixed bottom-8 right-8 bg-green-600 text-white p-4 rounded-full shadow-lg hover:bg-green-700 transition z-50"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contato via WhatsApp"
+      >
+        <WhatsApp size={24} aria-hidden="true" />
+      </a>
+    </div>
+  );
+}
+
+export default App;

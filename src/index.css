@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+}
+
+:root {
+  --foreground: #E8CBB4;
+  --background: #662F3C;
+  --accent: #C14A29;
+  --secondary: #7A904F;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: var(--foreground);
+  background: linear-gradient(to bottom, rgba(235, 234, 233, 0.1), rgba(102, 47, 60, 0.1));
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Garantir que o header não sobreponha o conteúdo */
+main {
+  padding-top: 0;
+}
+
+/* Melhorar a legibilidade dos links */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: white;
+}
+
+/* Ajustar o scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ajustar o tamanho das imagens */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Melhorar a responsividade */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 1.2em;
+  }
+  
+  main {
+    padding: 0;
+  }
+}
+
+/* Ajustes para o header transparente */
+header {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Ajustes para animações suaves */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Melhorias de acessibilidade */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Suporte para dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: #E8CBB4;
+    --background: #662F3C;
+  }
+}
