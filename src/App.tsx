@@ -344,7 +344,7 @@ function App() {
             <ChefHat className="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
             <span className="text-lg md:text-xl font-semibold">Chef Luis Tello</span>
           </div>
-          <p className="text-sm md:text-base">&copy; 2024 Chef Luis Tello. Todos los derechos reservados.</p>
+          <p className="text-sm md:text-base">&copy; 2025 Chef Luis Tello. Todos los derechos reservados.</p>
         </div>
       </footer>
 
